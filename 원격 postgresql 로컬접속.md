@@ -2,8 +2,19 @@
 
 우분투에서 PostgreSQL 설치
 
+PostgreSQL의 특정 버전을 설치하려면 공식 PostgreSQL 리포지토리를 추가해야 합니다.
+
 ```bash
-sudo apt install postgresql postgresql-contrib
+sudo apt install -y wget
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+```
+
+PostgreSQL 15 설치
+
+```bash
+sudo apt install postgresql-15 postgresql-contrib-15
 ```
 
 PostgreSQL 서비스가 실행 중인지 확인
@@ -21,14 +32,14 @@ sudo systemctl start postgresql
 postgresql.conf 파일 편집:
 
 ```bash
-sudo nano /etc/postgresql/16/main/postgresql.conf
+sudo nano /etc/postgresql/15/main/postgresql.conf
 listen_addresses = '*'
 ```
 
 pg_hba.conf 파일 편집:
 
 ```bash
-sudo nano /etc/postgresql/16/main/pg_hba.conf
+sudo nano /etc/postgresql/15/main/pg_hba.conf
 host    all             all             xxx.123.xxx/32            scram-sha-256
 ```
 
